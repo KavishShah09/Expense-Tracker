@@ -1,0 +1,25 @@
+CREATE DATABASE
+IF NOT EXISTS `tracker`
+USE `tracker`;
+
+DROP TABLE IF EXISTS `users`;
+
+CREATE TABLE `users`
+(
+  `id` int NOT NULL AUTO_INCREMENT,
+  `first_name` varchar
+(100) DEFAULT NULL,
+  `last_name` varchar
+(100) DEFAULT NULL,
+  `email` varchar
+(100) DEFAULT NULL,
+  `username` varchar
+(100) DEFAULT NULL,
+  `password` varchar
+(100) DEFAULT NULL,
+  `expense` int DEFAULT '0',
+  `role` varchar
+(100) DEFAULT 'user',
+  PRIMARY KEY
+(`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
