@@ -29,6 +29,7 @@ CREATE TABLE `transactions`
 (
 	`id` int AUTO_INCREMENT PRIMARY KEY,
     `amount` int NOT NULL  DEFAULT '0',
-    `description` varchar(255) DEFAULT NULL,
+    `description` varchar
+(255) DEFAULT NULL,
     `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-    );
+);

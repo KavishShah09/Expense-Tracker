@@ -116,6 +116,7 @@ def logout():
     flash('You are now logged out', 'success')
     return redirect(url_for('login'))
 
+
 class TransactionForm(Form):
     amount = IntegerField('Amount', validators=[DataRequired()])
     description = TextAreaField('Description', [validators.Length(min=1)])
@@ -133,12 +134,13 @@ def add_transactions():
         cur = mysql.connection.cursor()
 
         # Execute
-        cur.execute("INSERT INTO transactions(amount, description ) VALUES( %s, %s)",(amount, description ))
+        cur.execute(
+            "INSERT INTO transactions(amount, description ) VALUES( %s, %s)", (amount, description))
 
         # Commit to DB
         mysql.connection.commit()
 
-        #Close connection
+        # Close connection
         cur.close()
 
         flash('Transaction Created', 'success')
