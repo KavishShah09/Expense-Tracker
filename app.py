@@ -149,6 +149,23 @@ def add_transactions():
 
     return render_template('add_transactions.html', form=form)
 
+@app.route('/transaction_history')
+@is_logged_in
+def transaction_history():
+
+    cur = mysql.connection.cursor()
+
+    result = cur.execute("SELECT * FROM transactions")
+
+    transactions = cur.fetchall()
+
+    if result > 0:
+        return render_template('transaction_history.html', transactions=transactions)
+    else:
+        msg = 'No Transactions Found'
+        return render_template('transaction_history.html', msg=msg)
+    # Close connection
+    cur.close()
 
 if __name__ == '__main__':
     app.run(debug=True)

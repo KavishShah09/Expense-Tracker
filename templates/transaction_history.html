@@ -1,0 +1,26 @@
+{% extends 'layout.html' %}
+{% block body %}
+<div class="container">
+	<h1 class="text-light">Expenses</h1>
+	<table class="table table-striped">
+		<tr>
+		  <th>ID</th>
+		  <th>Amount</th>
+		  <th>Description</th>
+		  <th>Date</th>
+		  <th></th>
+		  <th></th>
+		</tr>
+		{% for transaction in transactions %}
+		  <tr>
+			<td>{{transaction.id}}</td>
+			<td>{{transaction.amount}}</td>
+			<td>{{transaction.description}}</td>
+			<td>{{transaction.date}}</td>
+			<td><a href="#" class="btn btn-default pull-right">Edit</a></td>
+			<td><a href="#" class="btn btn-default pull">Delete</a></td>
+		  </tr>
+		{% endfor %}
+	  </table>
+</div>
+{% endblock %}
