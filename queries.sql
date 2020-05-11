@@ -23,3 +23,12 @@ CREATE TABLE `users`
   PRIMARY KEY
 (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+DROP TABLE IF EXISTS `transactions`;
+CREATE TABLE `transactions`
+(
+	`id` int AUTO_INCREMENT PRIMARY KEY,
+    `amount` int NOT NULL  DEFAULT '0',
+    `description` varchar(255) DEFAULT NULL,
+    `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );

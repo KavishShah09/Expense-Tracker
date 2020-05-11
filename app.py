@@ -1,8 +1,10 @@
 from flask import Flask, render_template, request, flash, redirect, url_for, session, logging
 from flask_mysqldb import MySQL
-from wtforms import Form, StringField, PasswordField, validators
+from wtforms import Form, StringField, PasswordField, TextAreaField, IntegerField, validators
+from wtforms.validators import DataRequired
 from passlib.hash import sha256_crypt
 from functools import wraps
+
 
 app = Flask(__name__, static_url_path='/static')
 app.config.from_pyfile('config.py')
@@ -113,6 +115,37 @@ def logout():
     session.clear()
     flash('You are now logged out', 'success')
     return redirect(url_for('login'))
+
+class TransactionForm(Form):
+    amount = IntegerField('Amount', validators=[DataRequired()])
+    description = TextAreaField('Description', [validators.Length(min=1)])
+
+# Add Transactions
+@app.route('/add_transactions', methods=['GET', 'POST'])
+@is_logged_in
+def add_transactions():
+    form = TransactionForm(request.form)
+    if request.method == 'POST' and form.validate():
+        amount = form.amount.data
+        description = form.description.data
+
+        # Create Cursor
+        cur = mysql.connection.cursor()
+
+        # Execute
+        cur.execute("INSERT INTO transactions(amount, description ) VALUES( %s, %s)",(amount, description ))
+
+        # Commit to DB
+        mysql.connection.commit()
+
+        #Close connection
+        cur.close()
+
+        flash('Transaction Created', 'success')
+
+        return redirect(url_for('index'))
+
+    return render_template('add_transactions.html', form=form)
 
 
 if __name__ == '__main__':
