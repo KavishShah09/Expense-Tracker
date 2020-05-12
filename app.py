@@ -76,14 +76,15 @@ def login():
 
         if result > 0:
             data = cur.fetchone()
+            userID = data['id']
             password = data['password']
             role = data['role']
-            Usersid = data['id']
 
             if sha256_crypt.verify(password_input, password):
                 session['logged_in'] = True
                 session['username'] = username
                 session['role'] = role
+                session['userID'] = userID
                 flash('You are now logged in', 'success')
                 return redirect(url_for('index'))
             else:
@@ -130,15 +131,13 @@ def add_transactions():
     if request.method == 'POST' and form.validate():
         amount = form.amount.data
         description = form.description.data
-        
+
         # Create Cursor
         cur = mysql.connection.cursor()
 
         # Execute
-        #username = cur.execute("SELECT CURRENT_USER() FROM users")
-        #result = cur.execute("SELECT id FROM users WHERE username= %s", [username])
-        #cur.execute(
-            #"INSERT INTO transactions( user_id, amount, description ) VALUES ( %s, %s, %s)", ( result, amount, description))
+        cur.execute(
+            "INSERT INTO transactions(user_id, amount, description) VALUES(%s, %s, %s)", (session['userID'], amount, description))
 
         # Commit to DB
         mysql.connection.commit()
@@ -146,12 +145,11 @@ def add_transactions():
         # Close connection
         cur.close()
 
-        flash('Transaction Created', 'success')
+        flash('Transaction Successfully Recorded', 'success')
 
         return redirect(url_for('index'))
 
     return render_template('add_transactions.html', form=form)
-
 
 
 @app.route('/transaction_history')
@@ -160,11 +158,11 @@ def transaction_history():
 
     cur = mysql.connection.cursor()
 
-    #result = cur.execute("SELECT transactions.id,transactions.amount,transactions.description,transactions.date FROM users INNER JOIN transactions ON users.id = transactions.user_id")
-
-    transactions = cur.fetchall()
+    result = cur.execute(
+        "SELECT * FROM transactions WHERE user_id = %s", [session['userID']])
 
     if result > 0:
+        transactions = cur.fetchall()
         return render_template('transaction_history.html', transactions=transactions)
     else:
         msg = 'No Transactions Found'
