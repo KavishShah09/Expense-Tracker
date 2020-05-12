@@ -78,6 +78,7 @@ def login():
             data = cur.fetchone()
             password = data['password']
             role = data['role']
+            Usersid = data['id']
 
             if sha256_crypt.verify(password_input, password):
                 session['logged_in'] = True
@@ -129,13 +130,15 @@ def add_transactions():
     if request.method == 'POST' and form.validate():
         amount = form.amount.data
         description = form.description.data
-
+        
         # Create Cursor
         cur = mysql.connection.cursor()
 
         # Execute
-        cur.execute(
-            "INSERT INTO transactions(amount, description ) VALUES( %s, %s)", (amount, description))
+        #username = cur.execute("SELECT CURRENT_USER() FROM users")
+        #result = cur.execute("SELECT id FROM users WHERE username= %s", [username])
+        #cur.execute(
+            #"INSERT INTO transactions( user_id, amount, description ) VALUES ( %s, %s, %s)", ( result, amount, description))
 
         # Commit to DB
         mysql.connection.commit()
@@ -149,13 +152,15 @@ def add_transactions():
 
     return render_template('add_transactions.html', form=form)
 
+
+
 @app.route('/transaction_history')
 @is_logged_in
 def transaction_history():
 
     cur = mysql.connection.cursor()
 
-    result = cur.execute("SELECT * FROM transactions")
+    #result = cur.execute("SELECT transactions.id,transactions.amount,transactions.description,transactions.date FROM users INNER JOIN transactions ON users.id = transactions.user_id")
 
     transactions = cur.fetchall()
 
@@ -166,6 +171,7 @@ def transaction_history():
         return render_template('transaction_history.html', msg=msg)
     # Close connection
     cur.close()
+
 
 if __name__ == '__main__':
     app.run(debug=True)

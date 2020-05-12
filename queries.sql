@@ -24,12 +24,15 @@ CREATE TABLE `users`
 (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+USE tracker;
 DROP TABLE IF EXISTS `transactions`;
 CREATE TABLE `transactions`
 (
-	`id` int AUTO_INCREMENT PRIMARY KEY,
-    `amount` int NOT NULL  DEFAULT '0',
-    `description` varchar
-(255) DEFAULT NULL,
-    `date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	 id int AUTO_INCREMENT,
+     user_id INT,
+    amount int NOT NULL DEFAULT '0',
+    description varchar (255) DEFAULT NULL,
+    date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY(id),
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
