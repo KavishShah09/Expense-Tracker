@@ -118,15 +118,81 @@ def logout():
     flash('You are now logged out', 'success')
     return redirect(url_for('login'))
 
+# Add Transactions
+@app.route('/addTransactions', methods=['GET', 'POST'])
+@is_logged_in
+def addTransactions():
+    if request.method == 'POST':
+        amount = request.form['amount']
+        description = request.form['description']
+
+        # Create Cursor
+        cur = mysql.connection.cursor()
+
+        # Execute
+        cur.execute(
+            "INSERT INTO transactions(user_id, amount, description) VALUES(%s, %s, %s)", (session['userID'], amount, description))
+
+        # Commit to DB
+        mysql.connection.commit()
+
+        # Close connection
+        cur.close()
+
+        flash('Transaction Successfully Recorded', 'success')
+
+        return redirect(url_for('addTransactions'))
+
+    if request.method == 'GET':
+        cur = mysql.connection.cursor()
+
+        # get the latest 10 transactions made by a particular user
+        result = cur.execute(
+            "SELECT * FROM transactions WHERE user_id = %s ORDER BY date DESC LIMIT 10", [
+                session['userID']]
+        )
+
+        if result > 0:
+            transactions = cur.fetchall()
+            return render_template('addTransactions.html', transactions=transactions)
+        else:
+            msg = 'No Transactions Found'
+            return render_template('addTransactions.html', msg=msg)
+
+        # close the connections
+        cur.close()
+
+    return render_template('addTransactions.html')
+
+
+@app.route('/transactionHistory')
+@is_logged_in
+def transactionHistory():
+
+    # Create cursor
+    cur = mysql.connection.cursor()
+
+    # Get Transactions made by a particular user
+    result = cur.execute(
+        "SELECT * FROM transactions WHERE user_id = %s", [session['userID']])
+
+    if result > 0:
+        transactions = cur.fetchall()
+        return render_template('transactionHistory.html',result=result, transactions=transactions)
+    else:
+        msg = 'No Transactions Found'
+        return redirect(url_for('addTransactions'))
+    # Close connection
+    cur.close()
 
 class TransactionForm(Form):
     amount = IntegerField('Amount', validators=[DataRequired()])
     description = StringField('Description', [validators.Length(min=1)])
 
-# Add Transactions
-@app.route('/addTransactions', methods=['GET', 'POST'])
+# Edit Transactions
+@app.route('/editTransaction', methods=['GET', 'POST'])
 @is_logged_in
-def addTransactions():
+def editTransactions():
     form = TransactionForm(request.form)
     if request.method == 'POST' and form.validate():
         amount = form.amount.data
@@ -147,49 +213,9 @@ def addTransactions():
 
         flash('Transaction Successfully Recorded', 'success')
 
-        return redirect(url_for('index'))
-
-    if request.method == 'GET':
-        cur = mysql.connection.cursor()
-
-        # get the latest 10 transactions made by a particular user
-        result = cur.execute(
-            "SELECT * FROM transactions WHERE user_id = %s ORDER BY date DESC LIMIT 10", [
-                session['userID']]
-        )
-
-        if result > 0:
-            transactions = cur.fetchall()
-            return render_template('addTransactions.html', form=form, transactions=transactions)
-        else:
-            msg = 'No Transactions Found'
-            return render_template('addTransactions.html', form=form, msg=msg)
-
-        # close the connections
-        cur.close()
-
-    return render_template('addTransactions.html', form=form)
-
-
-@app.route('/transactionHistory')
-@is_logged_in
-def transactionHistory():
-
-    # Create cursor
-    cur = mysql.connection.cursor()
-
-    # Get Transactions made by a particular user
-    result = cur.execute(
-        "SELECT * FROM transactions WHERE user_id = %s", [session['userID']])
-
-    if result > 0:
-        transactions = cur.fetchall()
-        return render_template('transactionHistory.html', transactions=transactions)
-    else:
-        msg = 'No Transactions Found'
-        return render_template('transactionHistory.html', msg=msg)
-    # Close connection
-    cur.close()
+        return redirect(url_for('transactionHistory'))
+        
+    return render_template('editTransaction.html', form=form)
 
 # Edit transaction
 @app.route('/editTransaction/<string:id>', methods=['GET', 'POST'])
