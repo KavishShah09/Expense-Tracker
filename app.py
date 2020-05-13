@@ -110,7 +110,6 @@ def is_logged_in(f):
             return redirect(url_for('login'))
     return wrap
 
-
 @app.route('/logout')
 @is_logged_in
 def logout():
@@ -124,9 +123,9 @@ class TransactionForm(Form):
     description = TextAreaField('Description', [validators.Length(min=1)])
 
 # Add Transactions
-@app.route('/add_transactions', methods=['GET', 'POST'])
+@app.route('/addTransactions', methods=['GET', 'POST'])
 @is_logged_in
-def add_transactions():
+def adTransactions():
     form = TransactionForm(request.form)
     if request.method == 'POST' and form.validate():
         amount = form.amount.data
@@ -149,27 +148,105 @@ def add_transactions():
 
         return redirect(url_for('index'))
 
-    return render_template('add_transactions.html', form=form)
+    return render_template('addTransactions.html', form=form)
 
-
-@app.route('/transaction_history')
+@app.route('/transactionHistory')
 @is_logged_in
-def transaction_history():
+def transactionHistory():
 
+    # Create cursor
     cur = mysql.connection.cursor()
 
+    #Get Transactions made by a particular user
     result = cur.execute(
         "SELECT * FROM transactions WHERE user_id = %s", [session['userID']])
 
     if result > 0:
         transactions = cur.fetchall()
-        return render_template('transaction_history.html', transactions=transactions)
+        return render_template('transactionHistory.html', transactions=transactions)
     else:
         msg = 'No Transactions Found'
-        return render_template('transaction_history.html', msg=msg)
+        return render_template('transactionHistory.html', msg=msg)
     # Close connection
     cur.close()
 
+@app.route('/transactionHistory')
+@is_logged_in
+def totalExpense():
+
+    #Create cursor
+    cur = mysql.connection.cursor()
+
+    #Get the amount of a particular user
+    cur.execute("SELECT sum(amount) total from transactions WHERE user_id = %s", [session['userID']])
+
+    transactions = cur.fetchall()
+    return render_template('transactionHistory.html', transactions=transactions)
+
+    # Close connection
+    cur.close()
+
+
+
+
+# Edit transaction
+@app.route('/editTransaction/<string:id>', methods=['GET', 'POST'])
+@is_logged_in
+def editTransaction(id):
+    # Create cursor
+    cur = mysql.connection.cursor()
+
+    # Get transaction by id
+    cur.execute("SELECT * FROM transactions WHERE id = %s", [id])
+
+    transaction = cur.fetchone()
+    cur.close()
+    # Get form
+    form = TransactionForm(request.form)
+
+    # Populate transaction form fields
+    form.amount.data = transaction['amount']
+    form.description.data = transaction['description']
+
+    if request.method == 'POST' and form.validate():
+        amount = request.form['amount']
+        description = request.form['description']
+
+        # Create Cursor
+        cur = mysql.connection.cursor()
+        # Execute
+        cur.execute ("UPDATE transactions SET amount=%s, description=%s WHERE id = %s",(amount, description, id))
+        # Commit to DB
+        mysql.connection.commit()
+
+        #Close connection
+        cur.close()
+
+        flash('Transaction Updated', 'success')
+
+        return redirect(url_for('transactionHistory'))
+
+    return render_template('editTransaction.html', form=form)
+
+# Delete transaction
+@app.route('/deleteTransaction/<string:id>', methods=['POST'])
+@is_logged_in
+def deleteTransaction(id):
+    # Create cursor
+    cur = mysql.connection.cursor()
+
+    # Execute
+    cur.execute("DELETE FROM transactions WHERE id = %s", [id])
+
+    # Commit to DB
+    mysql.connection.commit()
+
+    #Close connection
+    cur.close()
+
+    flash('Transaction Deleted', 'success')
+
+    return redirect(url_for('transactionHistory'))
 
 if __name__ == '__main__':
     app.run(debug=True)
