@@ -1,16 +1,33 @@
-{% extends 'layout.html' %}
+{% extends 'layout.html' %} {% block body %}
+<h1 class="text-light"><u>Add Transactions</u></h1>
+{% from "includes/_formhelpers.html" import render_field %}
+<form method="POST" action="">
+	<div class="form-group text-light">
+		{{ render_field(form.amount, class_="form-control") }}
+	</div>
+	<div class="form-group text-light">
+		{{ render_field(form.description, class_="form-control") }}
+	</div>
+	<p class="text-center"><input class="btn btn-primary" type="submit" value="Submit" /></p>
+</form>
 
-{% block body %}
-  <h1 class="text-light"><u>Add Transactions</u></h1>
-  {% from "includes/_formhelpers.html" import render_field %}
-  <form method="POST" action="">
-    <div class="form-group text-light">
-      {{ render_field(form.amount, class_="form-control") }}
-    </div>
-    <div class="form-group text-light">
-      {{ render_field(form.description, class_="form-control") }}
-    </div>
-    <p><input class="btn btn-primary" type="submit" value="Submit">
-  </form>
-  <a href="/latestTransactions" class="btn btn-primary pull-right">View Latest Transactions</a>
+<div>
+	<h1 class="text-light">
+		Latest Expenses
+	</h1>
+</div>
+<table class="table table-striped text-light">
+	<tr>
+		<th>Date</th>
+		<th>Amount</th>
+		<th>Description</th>
+	</tr>
+	{% for transaction in transactions %}
+	<tr>
+		<td>{{transaction.date}}</td>
+		<td>{{transaction.amount}}</td>
+		<td>{{transaction.description}}</td>
+	</tr>
+	{% endfor %}
+</table>
 {% endblock %}

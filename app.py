@@ -110,6 +110,7 @@ def is_logged_in(f):
             return redirect(url_for('login'))
     return wrap
 
+
 @app.route('/logout')
 @is_logged_in
 def logout():
@@ -120,7 +121,7 @@ def logout():
 
 class TransactionForm(Form):
     amount = IntegerField('Amount', validators=[DataRequired()])
-    description = TextAreaField('Description', [validators.Length(min=1)])
+    description = StringField('Description', [validators.Length(min=1)])
 
 # Add Transactions
 @app.route('/addTransactions', methods=['GET', 'POST'])
@@ -148,29 +149,27 @@ def addTransactions():
 
         return redirect(url_for('index'))
 
+    if request.method == 'GET':
+        cur = mysql.connection.cursor()
+
+        # get the latest 10 transactions made by a particular user
+        result = cur.execute(
+            "SELECT * FROM transactions WHERE user_id = %s ORDER BY date DESC LIMIT 10", [
+                session['userID']]
+        )
+
+        if result > 0:
+            transactions = cur.fetchall()
+            return render_template('addTransactions.html', form=form, transactions=transactions)
+        else:
+            msg = 'No Transactions Found'
+            return render_template('addTransactions.html', form=form, msg=msg)
+
+        # close the connections
+        cur.close()
+
     return render_template('addTransactions.html', form=form)
 
-@app.route('/latestTransactions')
-@is_logged_in
-def latestTransactions():
-
-    #create cursor
-    cur = mysql.connection.cursor()
-
-    #get hte latest 10 transactions made by a particular user
-    result = cur.execute(
-        "SELECT * FROM transactions WHERE user_id = %s ORDER BY date DESC LIMIT 10", [session['userID']]
-    ) 
-
-    if result > 0:
-        transactions = cur.fetchall()
-        return render_template('latestTransactions.html', transactions=transactions)
-    else:
-        msg = 'No Transactions Found'
-        return render_template('latestTransactions.html', msg=msg)
-
-    #close the connections
-    cur.close()
 
 @app.route('/transactionHistory')
 @is_logged_in
@@ -179,7 +178,7 @@ def transactionHistory():
     # Create cursor
     cur = mysql.connection.cursor()
 
-    #Get Transactions made by a particular user
+    # Get Transactions made by a particular user
     result = cur.execute(
         "SELECT * FROM transactions WHERE user_id = %s", [session['userID']])
 
@@ -218,11 +217,12 @@ def editTransaction(id):
         # Create Cursor
         cur = mysql.connection.cursor()
         # Execute
-        cur.execute ("UPDATE transactions SET amount=%s, description=%s WHERE id = %s",(amount, description, id))
+        cur.execute("UPDATE transactions SET amount=%s, description=%s WHERE id = %s",
+                    (amount, description, id))
         # Commit to DB
         mysql.connection.commit()
 
-        #Close connection
+        # Close connection
         cur.close()
 
         flash('Transaction Updated', 'success')
@@ -244,12 +244,13 @@ def deleteTransaction(id):
     # Commit to DB
     mysql.connection.commit()
 
-    #Close connection
+    # Close connection
     cur.close()
 
     flash('Transaction Deleted', 'success')
 
     return redirect(url_for('transactionHistory'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
