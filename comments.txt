@@ -1,0 +1,6 @@
+1)I have made a the latest post file such that when one goes to addTransaction page,
+they get a button to go to the latest transaction page and vice-a-versa 
+cause somehow i am not getting the data of the latestTransaction query into the DOM on the addTransaction page...
+If you can do it please change it..
+
+2)Ill try to do the styling tonight.

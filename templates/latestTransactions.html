@@ -1,0 +1,23 @@
+{% extends 'layout.html' %} {% block body %}
+<div class="container">
+    <div>
+        <h1 class="text-light"> Latest Expenses <a href="/addTransactions" class="btn btn-primary float-right">Add Transactions</a></h1> 
+    </div>
+	<table class="table table-striped text-success">
+		<tr>
+			<!--<th>ID</th>-->
+			<th>Date</th>
+			<th>Amount</th>
+			<th>Description</th>
+		</tr>
+		{% for transaction in transactions %}
+		<tr>
+			<!--<td>{{transaction.id}}</td>-->
+			<td>{{transaction.date}}</td>
+			<td>{{transaction.amount}}</td>
+			<td>{{transaction.description}}</td>
+		</tr>
+		{% endfor %}
+	</table>
+</div>
+{% endblock %}

@@ -125,7 +125,7 @@ class TransactionForm(Form):
 # Add Transactions
 @app.route('/addTransactions', methods=['GET', 'POST'])
 @is_logged_in
-def adTransactions():
+def addTransactions():
     form = TransactionForm(request.form)
     if request.method == 'POST' and form.validate():
         amount = form.amount.data
@@ -150,6 +150,28 @@ def adTransactions():
 
     return render_template('addTransactions.html', form=form)
 
+@app.route('/latestTransactions')
+@is_logged_in
+def latestTransactions():
+
+    #create cursor
+    cur = mysql.connection.cursor()
+
+    #get hte latest 10 transactions made by a particular user
+    result = cur.execute(
+        "SELECT * FROM transactions WHERE user_id = %s ORDER BY date DESC LIMIT 10", [session['userID']]
+    ) 
+
+    if result > 0:
+        transactions = cur.fetchall()
+        return render_template('latestTransactions.html', transactions=transactions)
+    else:
+        msg = 'No Transactions Found'
+        return render_template('latestTransactions.html', msg=msg)
+
+    #close the connections
+    cur.close()
+
 @app.route('/transactionHistory')
 @is_logged_in
 def transactionHistory():
@@ -169,25 +191,6 @@ def transactionHistory():
         return render_template('transactionHistory.html', msg=msg)
     # Close connection
     cur.close()
-
-@app.route('/transactionHistory')
-@is_logged_in
-def totalExpense():
-
-    #Create cursor
-    cur = mysql.connection.cursor()
-
-    #Get the amount of a particular user
-    cur.execute("SELECT sum(amount) total from transactions WHERE user_id = %s", [session['userID']])
-
-    transactions = cur.fetchall()
-    return render_template('transactionHistory.html', transactions=transactions)
-
-    # Close connection
-    cur.close()
-
-
-
 
 # Edit transaction
 @app.route('/editTransaction/<string:id>', methods=['GET', 'POST'])

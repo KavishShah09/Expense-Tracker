@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-  <h1 class="text-light">Add Article</h1>
+  <h1 class="text-light"><u>Add Transactions</u></h1>
   {% from "includes/_formhelpers.html" import render_field %}
   <form method="POST" action="">
     <div class="form-group text-light">
@@ -12,4 +12,5 @@
     </div>
     <p><input class="btn btn-primary" type="submit" value="Submit">
   </form>
+  <a href="/latestTransactions" class="btn btn-primary pull-right">View Latest Transactions</a>
 {% endblock %}
