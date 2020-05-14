@@ -2,7 +2,7 @@ CREATE DATABASE
 IF NOT EXISTS `tracker`;
 USE `tracker`;
 
-C
+
 CREATE TABLE `transactions`
 (
   `id` int NOT NULL AUTO_INCREMENT,

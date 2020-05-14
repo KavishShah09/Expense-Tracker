@@ -1,46 +1,59 @@
 {% extends 'layout.html' %} {% block body %}
-	<h3 class="text-light" style="padding-top: 20px; text-align: center;">Add Transactions</h3>
+<h3 class="text-light" style="padding-top: 20px; text-align: center;">Add Transactions</h3>
 {% from "includes/_formhelpers.html" import render_field %}
-	  <form method="POST" action="" style="padding-top: 20px;">
-		<div class="form-group row">
-			<div class="form-group col-md-4">
-				<input type="number" placeholder="Enter Amount" class="form-control" name="amount" value={{request.form.amount}}>
-			</div>
-			<div class="form-group col-md-6">
-				<input type="text" placeholder="Enter Description" name="description" class="form-control" value={{request.form.description}}>
-			</div>
-			<div class="form-group col-md-2">
-				<button type="submit" class="btn btn-primary">Add Transactions</button>
-			</div> 
+<form method="POST" action="" style="padding-top: 20px;">
+	<div class="form-group row">
+		<div class="form-group col-md-4">
+			<input
+				type="number"
+				placeholder="Enter Amount"
+				class="form-control"
+				name="amount"
+				value="{{request.form.amount}}"
+			/>
 		</div>
-	  </form>
-	
-{% for transaction in transactions %}
-	<div>
-		<h1 class="text-light">
-			Latest Expenses
-		</h1>
+		<div class="form-group col-md-6">
+			<input
+				type="text"
+				placeholder="Enter Description"
+				name="description"
+				class="form-control"
+				value="{{request.form.description}}"
+			/>
+		</div>
+		<div class="form-group col-md-2">
+			<button type="submit" class="btn btn-primary">Add Transactions</button>
+		</div>
 	</div>
-	<table class="table table-striped text-light">
-		<tr>
-			<th>Date</th>
-			<th>Amount</th>
-			<th>Description</th>
-			<th></th>
-			<th></th>
-		</tr>
-		<tr>
-			<td>{{transaction.date}}</td>
-			<td>{{transaction.amount}}</td>
-			<td>{{transaction.description}}</td>
-			<td><a href="editTransaction/{{transaction.id}}" class="btn btn-primary pull-right">Edit</a></td>
-			<td>
-				<form action="{{url_for('deleteTransaction', id=transaction.id)}}" method="post">
-					<input type="hidden" name="_method" value="DELETE" />
-					<input type="submit" value="Delete" class="btn btn-danger" />
-				</form>
-			</td>
-		</tr>
-	</table>
-{% endfor %}
-{% endblock %}
+</form>
+
+{% if result != 0%}
+<div>
+	<h1 class="text-light">
+		Latest Expenses
+	</h1>
+</div>
+<table class="table table-striped text-light">
+	<tr>
+		<th>Date</th>
+		<th>Amount</th>
+		<th>Description</th>
+		<th></th>
+		<th></th>
+	</tr>
+	{% for transaction in transactions %}
+	<tr>
+		<td>{{transaction.date}}</td>
+		<td>{{transaction.amount}}</td>
+		<td>{{transaction.description}}</td>
+		<td><a href="editTransaction/{{transaction.id}}" class="btn btn-primary pull-right">Edit</a></td>
+		<td>
+			<form action="{{url_for('deleteTransaction', id=transaction.id)}}" method="post">
+				<input type="hidden" name="_method" value="DELETE" />
+				<input type="submit" value="Delete" class="btn btn-danger" />
+			</form>
+		</td>
+	</tr>
+	{% endfor %}
+</table>
+{%endif%} {% endblock %}

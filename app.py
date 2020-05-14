@@ -86,7 +86,7 @@ def login():
                 session['role'] = role
                 session['userID'] = userID
                 flash('You are now logged in', 'success')
-                return redirect(url_for('index'))
+                return redirect(url_for('addTransactions'))
             else:
                 error = 'Invalid Password'
                 return render_template('login.html', form=form, error=error)
@@ -156,8 +156,7 @@ def addTransactions():
             transactions = cur.fetchall()
             return render_template('addTransactions.html', transactions=transactions)
         else:
-            msg = 'No Transactions Found'
-            return render_template('addTransactions.html', msg=msg)
+            return render_template('addTransactions.html', result=result)
 
         # close the connections
         cur.close()
@@ -172,18 +171,25 @@ def transactionHistory():
     # Create cursor
     cur = mysql.connection.cursor()
 
+    cur.execute(
+        "SELECT SUM(amount) FROM transactions WHERE user_id = %s", [session['userID']])
+
+    data = cur.fetchone()
+    totalExpenses = data['SUM(amount)']
+
     # Get Transactions made by a particular user
     result = cur.execute(
         "SELECT * FROM transactions WHERE user_id = %s", [session['userID']])
 
     if result > 0:
         transactions = cur.fetchall()
-        return render_template('transactionHistory.html',result=result, transactions=transactions)
+        return render_template('transactionHistory.html', totalExpenses=totalExpenses, transactions=transactions)
     else:
         msg = 'No Transactions Found'
-        return redirect(url_for('addTransactions'))
+        return render_template('addTransactions.html', result=result, msg=msg)
     # Close connection
     cur.close()
+
 
 class TransactionForm(Form):
     amount = IntegerField('Amount', validators=[DataRequired()])
@@ -214,7 +220,7 @@ def editTransactions():
         flash('Transaction Successfully Recorded', 'success')
 
         return redirect(url_for('transactionHistory'))
-        
+
     return render_template('editTransaction.html', form=form)
 
 # Edit transaction
