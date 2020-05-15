@@ -146,15 +146,21 @@ def addTransactions():
     if request.method == 'GET':
         cur = mysql.connection.cursor()
 
-        # get the latest 10 transactions made by a particular user
+        cur.execute(
+            "SELECT SUM(amount) FROM transactions WHERE MONTH(date) = MONTH(CURRENT_DATE()) AND YEAR(date) = YEAR(CURRENT_DATE()) AND user_id = %s", [session['userID']])
+
+        data = cur.fetchone()
+        totalExpenses = data['SUM(amount)']
+
+        # get the month's transactions made by a particular user
         result = cur.execute(
-            "SELECT * FROM transactions WHERE user_id = %s ORDER BY date DESC LIMIT 10", [
+            "SELECT * FROM transactions WHERE MONTH(date) = MONTH(CURRENT_DATE()) AND YEAR(date) = YEAR(CURRENT_DATE()) AND user_id = %s ORDER BY date DESC", [
                 session['userID']]
         )
 
         if result > 0:
             transactions = cur.fetchall()
-            return render_template('addTransactions.html', transactions=transactions)
+            return render_template('addTransactions.html', totalExpenses=totalExpenses, transactions=transactions)
         else:
             return render_template('addTransactions.html', result=result)
 
@@ -177,9 +183,11 @@ def transactionHistory():
     data = cur.fetchone()
     totalExpenses = data['SUM(amount)']
 
-    # Get Transactions made by a particular user
+    # Get Latest Transactions made by a particular user
     result = cur.execute(
-        "SELECT * FROM transactions WHERE user_id = %s", [session['userID']])
+        "SELECT * FROM transactions WHERE user_id = %s ORDER BY date DESC", [
+            session['userID']]
+    )
 
     if result > 0:
         transactions = cur.fetchall()
