@@ -237,8 +237,8 @@ def transactionHistory():
             transactions = cur.fetchall()
             return render_template('transactionHistory.html', totalExpenses=totalExpenses, transactions=transactions)
         else:
-            msg = 'No Transactions Found'
-            return render_template('addTransactions.html', result=result, msg=msg)
+            flash('No Transactions Found', 'success')
+            return redirect(url_for('addTransactions'))
         # Close connection
         cur.close()
 
