@@ -3,36 +3,39 @@
 	<div class="info">
 		<h2 class="text-light">Transaction History</h2>
 	</div>
-	<form method="POST" action="" style="padding-top: 20px;">
-		<div class="form-group row">
-			<div class="form-group col-md-2">
-				<select name="month" id="month" class="form-control">
-					<option value="00">Select Month</option>
-					<option value="01">January</option>
-					<option value="02">February</option>
-					<option value="03">March</option>
-					<option value="04">April</option>
-					<option value="05">May</option>
-					<option value="06">June</option>
-					<option value="07">July</option>
-					<option value="08">August</option>
-					<option value="09">September</option>
-					<option value="10">October</option>
-					<option value="11">November</option>
-					<option value="12">December</option>
-				</select>
+	<div class="select-list">
+		<form method="POST" action="" style="padding-top: 20px;">
+			<div class="form-group row">
+				<div class="form-group month col-md-4">
+					<select name="month" id="month" class="form-control">
+						<option value="00">Select Month</option>
+						<option value="01">January</option>
+						<option value="02">February</option>
+						<option value="03">March</option>
+						<option value="04">April</option>
+						<option value="05">May</option>
+						<option value="06">June</option>
+						<option value="07">July</option>
+						<option value="08">August</option>
+						<option value="09">September</option>
+						<option value="10">October</option>
+						<option value="11">November</option>
+						<option value="12">December</option>
+					</select>
+				</div>
+				<div class="form-group col-md-4">
+					<input type="number" placeholder="Select Year" name="year" class="form-control" value="2020" />
+				</div>
+				<div class="form-group col-md-2">
+					<button type="submit" class="btn btn-primary">Submit</button>
+				</div>
 			</div>
-			<div class="form-group col-md-2">
-				<input type="number" placeholder="Select Year" name="year" class="form-control" value="2020" />
-			</div>
-			<div class="form-group col-md-2">
-				<button type="submit" class="btn btn-primary">Submit</button>
-			</div>
-		</div>
-	</form>
+		</form>
+	</div>
 	{% if result != 0%}
+	<h3 class="text-light float-right">Total Expenses = <span class="green-text">₹ {{totalExpenses}}</span></h3>
+	<p class="text-light float-left swipe">Swipe to Edit/Delete</p>
 	<div class="table-responsive">
-		<h3 class="text-light">Total Expenses = <span class="green-text">₹ {{totalExpenses}}</span></h3>
 		<table class="table table-striped text-light">
 			<tr>
 				<th>Date / Time</th>

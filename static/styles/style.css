@@ -75,8 +75,27 @@
 .history .info{
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+}
+
+.history .select-list{
+    display: flex;
+    flex-direction: row;
     justify-content: center;
     text-align: center;
+}
+
+.history .select-list .month{
+    margin-left: 45px;
+}
+
+.history .swipe{
+    visibility: hidden;
+}
+
+.add .swipe{
+    visibility: hidden;
 }
 
 .add h2{
@@ -88,9 +107,58 @@
     padding-top: 20px;
 }
 
-.add .current-month h3{
+.login .account{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
     text-align: center;
+    font-size: 1.2rem;
 }
 
+.signUp h2{
+    margin-top: 20px;
+}
 
+.signUp .account{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+@media only screen and (max-width: 500px) {
+    .history .select-list .month{
+        margin-left: 0px;
+    }
+    .history .swipe{
+        visibility: visible;
+        margin-left: 80px;
+    }
+    .history .table .btn{
+        margin-left: 10px;
+    }
+    .add .form .btn{
+        margin-left: 0px;
+    }
+    .add .current-month .expense{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        text-align: center;
+    }
+    .add .table .btn{
+        margin-left: 40px;
+    }
+    .add .swipe{
+        visibility: visible;
+        margin-left: 100px;
+    }
+    .team .card-1 .card-body{
+        visibility: hidden;
+    }
+    .team .card-2 .card-body{
+        visibility: hidden;
+    }
+  }
 

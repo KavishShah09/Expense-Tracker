@@ -13,14 +13,14 @@
 	</button>
 	<div class="collapse navbar-collapse" id="navbarNav">
 		<ul class="navbar-nav mr-auto">
+		</ul>
+		<ul class="navbar-nav ml-auto">
 			<li class="nav-item">
 				<a class="nav-link" href="/"><h5 class="text-light">Home</h5><span class="sr-only"></span></a>
 			</li>
 			<li class="nav-item">
 				<a class="nav-link" href="/about"><h5 class="text-light">About</h5></a>
 			</li>
-		</ul>
-		<ul class="navbar-nav ml-auto">
 			{% if session.logged_in %}
 			<li class="nav-item">
 				<a class="nav-link" href="/addTransactions"><h5 class="text-light">Add Transactions</h5><span class="sr-only"></span></a>

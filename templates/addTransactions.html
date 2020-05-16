@@ -22,7 +22,7 @@
 					value="{{request.form.description}}"
 				/>
 			</div>
-			<div class="form-group col-md-2">
+			<div class="form-group col-md-2 btn">
 				<button type="submit" class="btn btn-primary">Add Transactions</button>
 			</div>
 		</div>
@@ -30,9 +30,10 @@
 
 	{% if result != 0%}
 	<div class="current-month">
-		<h3 class="text-light">
-			Expenses Made This Month = <span class="green-text">₹ {{totalExpenses}}</span>
-		</h3>
+		<h4 class="text-light float-right">
+			Expenses Made This Month  = <span class="green-text expense">₹ {{totalExpenses}}</span>
+		</h4>
+		<p class="text-light float-left swipe">Swipe to Edit/Delete</p>
 	</div>
 	<div class="table-responsive">
 		<table class="table table-striped text-light">
