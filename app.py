@@ -143,7 +143,7 @@ def addTransactions():
 
         return redirect(url_for('addTransactions'))
 
-    if request.method == 'GET':
+    else:
         cur = mysql.connection.cursor()
 
         cur.execute(
@@ -170,33 +170,77 @@ def addTransactions():
     return render_template('addTransactions.html')
 
 
-@app.route('/transactionHistory')
+@app.route('/transactionHistory', methods=['GET', 'POST'])
 @is_logged_in
 def transactionHistory():
 
-    # Create cursor
-    cur = mysql.connection.cursor()
+    if request.method == 'POST':
+        month = request.form['month']
+        year = request.form['year']
+        # Create cursor
+        cur = mysql.connection.cursor()
 
-    cur.execute(
-        "SELECT SUM(amount) FROM transactions WHERE user_id = %s", [session['userID']])
+        cur.execute(
+            "SELECT SUM(amount) FROM transactions WHERE user_id = %s", [session['userID']])
 
-    data = cur.fetchone()
-    totalExpenses = data['SUM(amount)']
+        data = cur.fetchone()
+        totalExpenses = data['SUM(amount)']
 
-    # Get Latest Transactions made by a particular user
-    result = cur.execute(
-        "SELECT * FROM transactions WHERE user_id = %s ORDER BY date DESC", [
-            session['userID']]
-    )
+        if month == "00":
+            cur.execute(
+                f"SELECT SUM(amount) FROM transactions WHERE YEAR(date) = YEAR('{year}-00-00') AND user_id = {session['userID']}")
 
-    if result > 0:
-        transactions = cur.fetchall()
-        return render_template('transactionHistory.html', totalExpenses=totalExpenses, transactions=transactions)
+            data = cur.fetchone()
+            totalExpenses = data['SUM(amount)']
+
+            result = cur.execute(
+                f"SELECT * FROM transactions WHERE YEAR(date) = YEAR('{year}-00-00') AND user_id = {session['userID']} ORDER BY date DESC")
+        else:
+
+            cur.execute(
+                f"SELECT SUM(amount) FROM transactions WHERE MONTH(date) = MONTH('0000-{month}-00') AND YEAR(date) = YEAR('{year}-00-00') AND user_id = {session['userID']}")
+
+            data = cur.fetchone()
+            totalExpenses = data['SUM(amount)']
+
+            result = cur.execute(
+                f"SELECT * FROM transactions WHERE MONTH(date) = MONTH('0000-{month}-00') AND YEAR(date) = YEAR('{year}-00-00') AND user_id = {session['userID']} ORDER BY date DESC")
+
+        if result > 0:
+            transactions = cur.fetchall()
+            return render_template('transactionHistory.html', totalExpenses=totalExpenses, transactions=transactions)
+        else:
+            cur.execute(f"SELECT MONTHNAME('0000-{month}-00')")
+            data = cur.fetchone()
+            monthName = data[f'MONTHNAME(\'0000-{month}-00\')']
+            msg = f"No Transactions Found For {monthName}, {year}"
+            return render_template('transactionHistory.html', result=result, msg=msg)
+        # Close connection
+        cur.close()
     else:
-        msg = 'No Transactions Found'
-        return render_template('addTransactions.html', result=result, msg=msg)
-    # Close connection
-    cur.close()
+        # Create cursor
+        cur = mysql.connection.cursor()
+
+        cur.execute(
+            "SELECT SUM(amount) FROM transactions WHERE user_id = %s", [session['userID']])
+
+        data = cur.fetchone()
+        totalExpenses = data['SUM(amount)']
+
+        # Get Latest Transactions made by a particular user
+        result = cur.execute(
+            "SELECT * FROM transactions WHERE user_id = %s ORDER BY date DESC", [
+                session['userID']]
+        )
+
+        if result > 0:
+            transactions = cur.fetchall()
+            return render_template('transactionHistory.html', totalExpenses=totalExpenses, transactions=transactions)
+        else:
+            msg = 'No Transactions Found'
+            return render_template('addTransactions.html', result=result, msg=msg)
+        # Close connection
+        cur.close()
 
 
 class TransactionForm(Form):
