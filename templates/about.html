@@ -1,5 +1,5 @@
 {% extends 'layout.html' %} {% block body %}
-<div class="text-dark text-center jumbotron" style="background-color: #d9d9d9; margin-top: 20px;">
+<div class="about text-dark text-center jumbotron">
 	<h1><u>About</u></h1>
 	<h5>
 		As college students, we always thought we must track our expenses and make sure we spend it on the right
@@ -12,37 +12,70 @@
 	<h5>It gives you a month-wise total of your expenses and helps you compare your monthly expenses.</h5>
 	<h6>App Version: v0.1.0</h6>
 </div>
-<div class="text-light text-center">
+<div class="team text-light text-center">
 	<h1>Our Team</h1>
-	<div class="d-inline">
-		<div class="card mb-3 float-left" style="max-width: 540px; height: 350px; background-color: #d9d9d9;">
+	<div class=" cards d-inline">
+		<div class="card mb-3 float-left card-1">
 			<div class="row no-gutters">
 				<div class="col-md-6">
-					<img src="../static/kavishimg.jpg" class="card-img" alt="..." style="height: 349px; width: 275px;" />
+					<img src="../static/kavishimg.jpg" class="card-img" alt="..." />
 				</div>
 				<div class="col-md-6 text-dark">
 					<div class="card-body text-center">
 						<h4 class="card-title"><u>Kavish Shah</u></h4>
-						<p class="card-text" style="font-size: 20px;">
-							Kavish is a Computer Engineering student at Thadomal Shahani Engineering College. A ML and AI enthusiast. Passionate about Sports and new technology.
+						<p class="card-text">
+							Kavish is a Computer Engineering student at Thadomal Shahani Engineering College,Mumbai. He is a Machine Learning and Artificial Intelligence enthusiast. He is passionate about Sports and new technology.
 						</p>
 						<ul
-							class="inline card-text text-center"
-							style="list-style: none; display: flex; flex-direction: row; border-top: 1px solid #212529;"
-						>
+							class="inline card-text text-center">
 							<li>
 								<a href="https://www.linkedin.com/in/kavish-shah-501b32192/" class="btn btn1">
-									<i class="fa fa-linkedin" style="font-size: 30px;"></i>
+									<i class="fa fa-linkedin"></i>
 								</a>
 							</li>
 							<li>
 								<a href="https://github.com/KavishShah09" class="btn btn2">
-									<i class="fa fa-github" style="font-size: 30px;"></i>
+									<i class="fa fa-github"></i>
 								</a>
 							</li>
 							<li>
 								<a href="https://twitter.com/Kavish_Shah09" class="btn btn2">
-									<i class="fa fa-twitter" style="font-size: 30px;"></i>
+									<i class="fa fa-twitter"></i>
+								</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="card mb-3 float-right card-2">
+			<div class="row no-gutters">
+				<div class="col-md-6">
+					<img src="../static/yashimg.jpg" class="card-img" alt="..." />
+				</div>
+				<div class="col-md-6 text-dark">
+					<div class="card-body text-center">
+						<h4 class="card-title"><u>Yash Jhaveri</u></h4>
+						<p class="card-text">
+							Yash is a Computer Science student studying in DJ Sanghvi College of Engineering,Mumbai. He is an
+							enthusiastic learner and is passionate about technology and food.He loves innovation and wants to make this
+							world a better place.
+						</p>
+						<ul
+							class="inline card-text text-center">
+							<li>
+								<a href="https://www.linkedin.com/in/yash-jhaveri-3b0882192/" class="btn btn1">
+									<i class="fa fa-linkedin"></i>
+								</a>
+							</li>
+							<li>
+								<a href="https://github.com/yashjhaveri05" class="btn btn2">
+									<i class="fa fa-github"></i>
+								</a>
+							</li>
+							<li>
+								<a href="https://twitter.com/Yash07633994" class="btn btn2">
+									<i class="fa fa-twitter"></i>
 								</a>
 							</li>
 						</ul>
@@ -52,43 +85,4 @@
 		</div>
 	</div>
 </div>
-	<div class="card mb-3 float-right" style="max-width: 540px; height: 350px; background-color: #d9d9d9;">
-		<div class="row no-gutters">
-			<div class="col-md-6">
-				<img src="../static/yashimg.jpg" class="card-img" alt="..." style="height: 349px; width: 267px;" />
-			</div>
-			<div class="col-md-6 text-dark">
-				<div class="card-body text-center">
-					<h4 class="card-title"><u>Yash Jhaveri</u></h4>
-					<p class="card-text" style="font-size: 17px;">
-						Yash is a Computer Science student studying in Dwarkadas J Sanghvi College of Engineering. He is an
-						enthusiastic learner and is passionate about technology and food.He loves innovation and wants to make this
-						world a better place.
-					</p>
-					<ul
-						class="inline card-text text-center"
-						style="list-style: none; display: flex; flex-direction: row; border-top: 1px solid #212529;"
-					>
-						<li>
-							<a href="https://www.linkedin.com/in/yash-jhaveri-3b0882192/" class="btn btn1">
-								<i class="fa fa-linkedin" style="font-size: 30px;"></i>
-							</a>
-						</li>
-						<li>
-							<a href="https://github.com/yashjhaveri05" class="btn btn2">
-								<i class="fa fa-github" style="font-size: 30px;"></i>
-							</a>
-						</li>
-						<li>
-							<a href="https://twitter.com/Yash07633994" class="btn btn2">
-								<i class="fa fa-twitter" style="font-size: 30px;"></i>
-							</a>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<div style="margin-top: 400px;"></div>
 {% endblock %}

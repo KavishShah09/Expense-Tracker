@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="border-bottom: 1px solid white;">
-	<a class="navbar-brand" href="/"><h3>Expense Tracker</h3></a>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	<a class="navbar-brand" href="/"><h2 class="green-text">Expense <span class="text-light">Tracker</span></h2></a>
 	<button
 		class="navbar-toggler"
 		type="button"
@@ -14,29 +14,29 @@
 	<div class="collapse navbar-collapse" id="navbarNav">
 		<ul class="navbar-nav mr-auto">
 			<li class="nav-item">
-				<a class="nav-link" href="/"><h5>Home</h5><span class="sr-only"></span></a>
+				<a class="nav-link" href="/"><h5 class="text-light">Home</h5><span class="sr-only"></span></a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="/about"><h5>About</h5></a>
+				<a class="nav-link" href="/about"><h5 class="text-light">About</h5></a>
 			</li>
 		</ul>
 		<ul class="navbar-nav ml-auto">
 			{% if session.logged_in %}
 			<li class="nav-item">
-				<a class="nav-link" href="/addTransactions"><h5>Add Transactions</h5><span class="sr-only"></span></a>
+				<a class="nav-link" href="/addTransactions"><h5 class="text-light">Add Transactions</h5><span class="sr-only"></span></a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="/transactionHistory"><h5>Transaction History</h5><span class="sr-only"></span></a>
+				<a class="nav-link" href="/transactionHistory"><h5 class="text-light">Transaction History</h5><span class="sr-only"></span></a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="/logout"><h5>Logout</h5><span class="sr-only"></span></a>
+				<a class="nav-link" href="/logout"><h5 class="text-light">Logout</h5><span class="sr-only"></span></a>
 			</li>
 			{% else %}
 			<li class="nav-item">
-				<a class="nav-link" href="/signup"><h5>Sign Up</h5></a>
+				<a class="nav-link" href="/signup"><h5 class="text-light">Sign Up</h5></a>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="/login"><h5>Login</h5><span class="sr-only"></span></a>
+				<a class="nav-link" href="/login"><h5 class="text-light">Login</h5><span class="sr-only"></span></a>
 			</li>
 			{% endif %}
 		</ul>
