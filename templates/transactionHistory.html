@@ -1,6 +1,8 @@
 {% extends 'layout.html' %} {% block body %}
-<div class="container">
-	<h2 class="text-light" style="text-align: center; padding-top: 20px;">Transaction History</h2>
+<div class="history container">
+	<div class="info">
+		<h2 class="text-light">Transaction History</h2>
+	</div>
 	<form method="POST" action="" style="padding-top: 20px;">
 		<div class="form-group row">
 			<div class="form-group col-md-2">
@@ -29,30 +31,32 @@
 		</div>
 	</form>
 	{% if result != 0%}
-	<h3 class="text-light">Total Expenses = ₹ {{totalExpenses}}</h3>
-	<table class="table table-striped text-light">
-		<tr>
-			<th>Date / Time</th>
-			<th>Amount</th>
-			<th>Description</th>
-			<th></th>
-			<th></th>
-		</tr>
-		{% for transaction in transactions %}
-		<tr>
-			<td>{{transaction.date}}</td>
-			<td>{{transaction.amount}}</td>
-			<td>{{transaction.description}}</td>
-			<td><a href="editTransaction/{{transaction.id}}" class="btn btn-primary pull-right">Edit</a></td>
-			<td>
-				<form action="{{url_for('deleteTransaction', id=transaction.id)}}" method="post">
-					<input type="hidden" name="_method" value="DELETE" />
-					<input type="submit" value="Delete" class="btn btn-danger" />
-				</form>
-			</td>
-		</tr>
-		{% endfor %}
-	</table>
+	<div class="table-responsive">
+		<h3 class="text-light">Total Expenses = <span class="green-text">₹ {{totalExpenses}}</span></h3>
+		<table class="table table-striped text-light">
+			<tr>
+				<th>Date / Time</th>
+				<th>Amount</th>
+				<th>Description</th>
+				<th></th>
+				<th></th>
+			</tr>
+			{% for transaction in transactions %}
+			<tr>
+				<td>{{transaction.date}}</td>
+				<td>{{transaction.amount}}</td>
+				<td>{{transaction.description}}</td>
+				<td><a href="editTransaction/{{transaction.id}}" class="btn btn-primary pull-right">Edit</a></td>
+				<td>
+					<form action="{{url_for('deleteTransaction', id=transaction.id)}}" method="post">
+						<input type="hidden" name="_method" value="DELETE" />
+						<input type="submit" value="Delete" class="btn btn-danger" />
+					</form>
+				</td>
+			</tr>
+			{% endfor %}
+		</table>
+	</div>
 	{%endif%}
 </div>
 {% endblock %}
