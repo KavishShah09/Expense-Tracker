@@ -2,7 +2,7 @@
 <div class="add">
 	<h2 class="text-light">Add Transactions</h2>
 	{% from "includes/_formhelpers.html" import render_field %}
-	<form class="form" method="POST" action="" >
+	<form class="form" method="POST" action="">
 		<div class="form-group row">
 			<div class="form-group col-md-4">
 				<input
@@ -32,6 +32,8 @@
 	<div class="current-month">
 		<h4 class="text-light float-left">
 			Expenses Made This Month  = <span class="green-text expense">₹ {{totalExpenses}}</span>
+		<h4 class="text-light float-right">
+			Expenses Made This Month = <span class="green-text expense">₹ {{totalExpenses}}</span>
 		</h4>
 		<p class="text-light float-left swipe">Swipe to Edit/Delete</p>
 	</div>
