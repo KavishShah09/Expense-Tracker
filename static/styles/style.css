@@ -94,6 +94,10 @@
     visibility: hidden;
 }
 
+.history .table tr{
+    font-size: 1.1rem;
+}
+
 .add .swipe{
     visibility: hidden;
 }
@@ -115,6 +119,10 @@
     font-size: 1.2rem;
 }
 
+.login .account a{
+    padding-left: 10px;
+}
+
 .signUp h2{
     margin-top: 20px;
 }
@@ -127,6 +135,10 @@
     font-size: 1.2rem;
 }
 
+.signUp .account a{
+    padding-left: 10px;
+}
+
 @media only screen and (max-width: 500px) {
     .history .select-list .month{
         margin-left: 0px;
@@ -134,10 +146,11 @@
     .history .swipe{
         visibility: visible;
         margin-left: 80px;
+        font-size: 1rem;
     }
-    .history .table .btn{
+    /*.history .table .btn{
         margin-left: 10px;
-    }
+    }*/
     .add .form .btn{
         margin-left: 0px;
     }
@@ -147,12 +160,13 @@
         justify-content: center;
         text-align: center;
     }
-    .add .table .btn{
+    /*.add .table .btn{
         margin-left: 40px;
-    }
+    }*/
     .add .swipe{
         visibility: visible;
         margin-left: 100px;
+        font-size: 1rem;
     }
     .team .card-1 .card-body{
         visibility: hidden;
