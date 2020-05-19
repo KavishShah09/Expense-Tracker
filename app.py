@@ -4,7 +4,8 @@ from wtforms import Form, StringField, PasswordField, TextAreaField, IntegerFiel
 from wtforms.validators import DataRequired
 from passlib.hash import sha256_crypt
 from functools import wraps
-
+import timeago
+import datetime
 
 app = Flask(__name__, static_url_path='/static')
 app.config.from_pyfile('config.py')
@@ -160,6 +161,9 @@ def addTransactions():
 
         if result > 0:
             transactions = cur.fetchall()
+            for transaction in transactions:
+                transaction['date'] = timeago.format(
+                    transaction['date'], datetime.datetime.now())
             return render_template('addTransactions.html', totalExpenses=totalExpenses, transactions=transactions)
         else:
             return render_template('addTransactions.html', result=result)
