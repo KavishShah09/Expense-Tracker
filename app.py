@@ -162,8 +162,12 @@ def addTransactions():
         if result > 0:
             transactions = cur.fetchall()
             for transaction in transactions:
-                transaction['date'] = timeago.format(
-                    transaction['date'], datetime.datetime.now())
+                if datetime.datetime.now() - transaction['date'] < datetime.timedelta(days=0.5):
+                    transaction['date'] = timeago.format(
+                        transaction['date'], datetime.datetime.now())
+                else:
+                    transaction['date'] = transaction['date'].strftime(
+                        '%d %B, %Y')
             return render_template('addTransactions.html', totalExpenses=totalExpenses, transactions=transactions)
         else:
             return render_template('addTransactions.html', result=result)
@@ -212,12 +216,18 @@ def transactionHistory():
 
         if result > 0:
             transactions = cur.fetchall()
+            for transaction in transactions:
+                transaction['date'] = transaction['date'].strftime(
+                    '%d %B, %Y')
             return render_template('transactionHistory.html', totalExpenses=totalExpenses, transactions=transactions)
         else:
             cur.execute(f"SELECT MONTHNAME('0000-{month}-00')")
             data = cur.fetchone()
-            monthName = data[f'MONTHNAME(\'0000-{month}-00\')']
-            msg = f"No Transactions Found For {monthName}, {year}"
+            if month != "00":
+                monthName = data[f'MONTHNAME(\'0000-{month}-00\')']
+                msg = f"No Transactions Found For {monthName}, {year}"
+            else:
+                msg = f"No Transactions Found For {year}"
             return render_template('transactionHistory.html', result=result, msg=msg)
         # Close connection
         cur.close()
@@ -239,6 +249,9 @@ def transactionHistory():
 
         if result > 0:
             transactions = cur.fetchall()
+            for transaction in transactions:
+                transaction['date'] = transaction['date'].strftime(
+                    '%d %B, %Y')
             return render_template('transactionHistory.html', totalExpenses=totalExpenses, transactions=transactions)
         else:
             flash('No Transactions Found', 'success')
