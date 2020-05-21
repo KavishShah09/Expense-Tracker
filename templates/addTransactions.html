@@ -4,7 +4,7 @@
 	{% from "includes/_formhelpers.html" import render_field %}
 	<form class="form" method="POST" action="">
 		<div class="form-group row">
-			<div class="form-group col-md-4">
+			<div class="form-group col-md-6">
 				<input
 					type="number"
 					placeholder="Enter Amount"
@@ -13,7 +13,23 @@
 					value="{{request.form.amount}}"
 				/>
 			</div>
-			<div class="form-group col-md-6">
+			<div class="form-group category col-md-6">
+				<select name="category" id="category" class="form-control">
+					<option value="Miscellaneous" selected="selected">Select Category</option>
+					<option value="Miscellaneous">Miscellaneous</option>
+					<option value="Food">Food</option>
+					<option value="Transportation">Transportation</option>
+					<option value="Groceries">Groceries</option>
+					<option value="Clothing">Clothing</option>
+					<option value="HouseHold Accessories">HouseHold Accessories</option>
+					<option value="Rent">Rent</option>
+					<option value="Bills">Bills</option>
+					<option value="Vacations">Vacations</option>
+					<option value="Taxes">Taxes</option>
+					<option value="Business Related">Business Related</option>
+				</select>
+			</div>
+			<div class="form-group col-md-10">
 				<input
 					type="text"
 					placeholder="Enter Description"
@@ -32,8 +48,6 @@
 	<div class="current-month">
 		<h4 class="text-light float-left">
 			Expenses Made This Month  = <span class="green-text expense">₹ {{totalExpenses}}</span>
-		<h4 class="text-light float-right">
-			Expenses Made This Month = <span class="green-text expense">₹ {{totalExpenses}}</span>
 		</h4>
 		<p class="text-light float-left swipe">Swipe to Edit/Delete</p>
 	</div>
@@ -42,6 +56,7 @@
 			<tr>
 				<th>Date</th>
 				<th>Amount</th>
+				<th>Category</th>
 				<th>Description</th>
 				<th></th>
 				<th></th>
@@ -50,6 +65,7 @@
 			<tr>
 				<td>{{transaction.date}}</td>
 				<td>{{transaction.amount}}</td>
+				<td>{{transaction.category}}</td>
 				<td>{{transaction.description}}</td>
 				<td><a href="editTransaction/{{transaction.id}}" class="btn btn-primary pull-right">Edit</a></td>
 				<td>

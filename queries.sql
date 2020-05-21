@@ -10,6 +10,7 @@ CREATE TABLE `transactions`
   `amount` int NOT NULL DEFAULT '0',
   `description` varchar
 (255) DEFAULT NULL,
+  `category` varchar (255) DEFAULT NULL,
   `date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY
 (`id`),

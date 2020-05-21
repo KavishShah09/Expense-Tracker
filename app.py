@@ -126,13 +126,14 @@ def addTransactions():
     if request.method == 'POST':
         amount = request.form['amount']
         description = request.form['description']
+        category = request.form['category']
 
         # Create Cursor
         cur = mysql.connection.cursor()
 
         # Execute
         cur.execute(
-            "INSERT INTO transactions(user_id, amount, description) VALUES(%s, %s, %s)", (session['userID'], amount, description))
+            "INSERT INTO transactions(user_id, amount, description,category) VALUES(%s, %s, %s, %s)", (session['userID'], amount, description,category))
 
         # Commit to DB
         mysql.connection.commit()
@@ -172,7 +173,7 @@ def addTransactions():
         cur.close()
 
     return render_template('addTransactions.html')
-
+    
 
 @app.route('/transactionHistory', methods=['GET', 'POST'])
 @is_logged_in
