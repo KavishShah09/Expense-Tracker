@@ -177,7 +177,13 @@ def addTransactions():
         cur.close()
 
     return render_template('addTransactions.html')
-    
+
+@app.route("/simple_chart")
+def chart():
+    legend = 'Monthly Data'
+    labels = ["January", "February", "March", "April", "May", "June", "July", "August"]
+    values = [10, 9, 8, 7, 6, 4, 7, 8]
+    return render_template('chart.html', values=values, labels=labels, legend=legend)
 
 @app.route('/transactionHistory', methods=['GET', 'POST'])
 @is_logged_in
