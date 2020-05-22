@@ -133,7 +133,7 @@ def addTransactions():
 
         # Execute
         cur.execute(
-            "INSERT INTO transactions(user_id, amount, description,category) VALUES(%s, %s, %s, %s)", (session['userID'], amount, description,category))
+            "INSERT INTO transactions(user_id, amount, description,category) VALUES(%s, %s, %s, %s)", (session['userID'], amount, description, category))
 
         # Commit to DB
         mysql.connection.commit()
@@ -178,12 +178,6 @@ def addTransactions():
 
     return render_template('addTransactions.html')
 
-@app.route("/simple_chart")
-def chart():
-    legend = 'Monthly Data'
-    labels = ["January", "February", "March", "April", "May", "June", "July", "August"]
-    values = [10, 9, 8, 7, 6, 4, 7, 8]
-    return render_template('chart.html', values=values, labels=labels, legend=legend)
 
 @app.route('/transactionHistory', methods=['GET', 'POST'])
 @is_logged_in
