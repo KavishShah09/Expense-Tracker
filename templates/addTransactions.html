@@ -47,7 +47,7 @@
 	{% if result != 0%}
 	<div class="current-month">
 		<h4 class="text-light float-left">
-			Expenses Made This Month  = <span class="green-text expense">₹ {{totalExpenses}}</span>
+			Expenses Made This Month = <span class="green-text expense">₹ {{totalExpenses}}</span>
 		</h4>
 		<p class="text-light float-left swipe">Swipe to Edit/Delete</p>
 	</div>
@@ -67,9 +67,9 @@
 				<td>{{transaction.amount}}</td>
 				<td>{{transaction.category}}</td>
 				<td>{{transaction.description}}</td>
-				<td><a href="editTransaction/{{transaction.id}}" class="btn btn-primary pull-right">Edit</a></td>
+				<td><a href="editCurrentMonthTransaction/{{transaction.id}}" class="btn btn-primary pull-right">Edit</a></td>
 				<td>
-					<form action="{{url_for('deleteTransaction', id=transaction.id)}}" method="post">
+					<form action="{{url_for('deleteCurrentMonthTransaction', id=transaction.id)}}" method="post">
 						<input type="hidden" name="_method" value="DELETE" />
 						<input type="submit" value="Delete" class="btn btn-danger" />
 					</form>

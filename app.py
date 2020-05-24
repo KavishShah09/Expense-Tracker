@@ -354,5 +354,65 @@ def deleteTransaction(id):
     return redirect(url_for('transactionHistory'))
 
 
+@app.route('/editCurrentMonthTransaction/<string:id>', methods=['GET', 'POST'])
+@is_logged_in
+def editCurrentMonthTransaction(id):
+    # Create cursor
+    cur = mysql.connection.cursor()
+
+    # Get transaction by id
+    cur.execute("SELECT * FROM transactions WHERE id = %s", [id])
+
+    transaction = cur.fetchone()
+    cur.close()
+    # Get form
+    form = TransactionForm(request.form)
+
+    # Populate transaction form fields
+    form.amount.data = transaction['amount']
+    form.description.data = transaction['description']
+
+    if request.method == 'POST' and form.validate():
+        amount = request.form['amount']
+        description = request.form['description']
+
+        # Create Cursor
+        cur = mysql.connection.cursor()
+        # Execute
+        cur.execute("UPDATE transactions SET amount=%s, description=%s WHERE id = %s",
+                    (amount, description, id))
+        # Commit to DB
+        mysql.connection.commit()
+
+        # Close connection
+        cur.close()
+
+        flash('Transaction Updated', 'success')
+
+        return redirect(url_for('addTransactions'))
+
+    return render_template('editTransaction.html', form=form)
+
+# Delete transaction
+@app.route('/deleteCurrentMonthTransaction/<string:id>', methods=['POST'])
+@is_logged_in
+def deleteCurrentMonthTransaction(id):
+    # Create cursor
+    cur = mysql.connection.cursor()
+
+    # Execute
+    cur.execute("DELETE FROM transactions WHERE id = %s", [id])
+
+    # Commit to DB
+    mysql.connection.commit()
+
+    # Close connection
+    cur.close()
+
+    flash('Transaction Deleted', 'success')
+
+    return redirect(url_for('addTransactions'))
+
+
 if __name__ == '__main__':
     app.run(debug=True)
