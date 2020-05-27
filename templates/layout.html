@@ -10,9 +10,14 @@
 			integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
 			crossorigin="anonymous"
 		/>
-		<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+		<link
+			href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+			rel="stylesheet"
+			integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+			crossorigin="anonymous"
+		/>
 		<title>Expense Tracker</title>
-		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+		<link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/style.css') }}" />
 	</head>
 
 	<body class="bg-dark">
@@ -20,7 +25,6 @@
 		<div class="container bg-dark">
 			{% include 'includes/_messages.html' %} {% block body %}{% endblock %}
 		</div>
-		
 
 		<script
 			src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
@@ -38,5 +42,6 @@
 			crossorigin="anonymous"
 		></script>
 		<script src="//cdn.ckeditor.com/4.13.1/standard/ckeditor.js"></script>
+		<script type="text/javascript" src="{{ url_for('static', filename='js/main.js') }}"></script>
 	</body>
 </html>
