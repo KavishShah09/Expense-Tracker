@@ -37,6 +37,9 @@ class SignUpForm(Form):
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
+    if 'logged_in' in session and session['logged_in'] == True:
+        flash('You are already logged in', 'info')
+        return redirect(url_for('addTransactions'))
     form = SignUpForm(request.form)
     if request.method == 'POST' and form.validate():
         first_name = form.first_name.data
@@ -65,6 +68,9 @@ class LoginForm(Form):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    if 'logged_in' in session and session['logged_in'] == True:
+        flash('You are already logged in', 'info')
+        return redirect(url_for('addTransactions'))
     form = LoginForm(request.form)
     if request.method == 'POST' and form.validate():
         username = form.username.data
