@@ -1,175 +1,179 @@
-.green-text{
-    color: #BADA55;
+.green-text {
+	color: #bada55;
 }
 
-.green{
-    color: #BADA55;
+.green {
+	color: #bada55;
 }
 
 .navbar {
-    border-bottom: 2px solid #BADA55;
+	border-bottom: 2px solid #bada55;
 }
 
-.about{
-    background-color: #e4e3e3; 
-    margin-top: 20px;
+.about {
+	background-color: #e4e3e3;
+	margin-top: 20px;
 }
 
-.team .cards{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-} 
-
-.team .card{
-    max-width: 540px;
-    height: 350px; 
-    background-color: #d9d9d9;
-    border: 5px solid #BADA55;
+.team .cards {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
 }
 
-.team .card-1 img{
-    height: 341px; 
-    width: 275px;
+.team .card {
+	max-width: 540px;
+	height: 350px;
+	background-color: #d9d9d9;
+	border: 5px solid #bada55;
 }
 
-.team .card-1 .card-text{
-    font-size: 17px;
+.team .card-1 img {
+	height: 341px;
+	width: 275px;
 }
 
-.team .card-1 .card-body ul{
-    list-style: none; 
-    display: flex; 
-    flex-direction: row; 
-    border-top: 1px solid #212529;
+.team .card-1 .card-text {
+	font-size: 17px;
 }
 
-.team .card-1 .card-body ul li i{
-    font-size: 30px;
+.team .card-1 .card-body ul {
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	border-top: 1px solid #212529;
 }
 
-.team .card-2 img{
-    height: 341px; 
-    width: 267px;
+.team .card-1 .card-body ul li i {
+	font-size: 30px;
 }
 
-.team .card-2 .card-text{
-    font-size: 17px;
+.team .card-2 img {
+	height: 341px;
+	width: 267px;
 }
 
-.team .card-2 .card-body ul{
-    list-style: none; 
-    display: flex; 
-    flex-direction: row; 
-    border-top: 1px solid #212529;
+.team .card-2 .card-text {
+	font-size: 17px;
 }
 
-.team .card-2 .card-body ul li i{
-    font-size: 30px;
+.team .card-2 .card-body ul {
+	list-style: none;
+	display: flex;
+	flex-direction: row;
+	border-top: 1px solid #212529;
 }
 
-.history{
-    margin-top: 25px;
+.team .card-2 .card-body ul li i {
+	font-size: 30px;
 }
 
-.history .info{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    text-align: center;
+.history {
+	margin-top: 25px;
 }
 
-.history .select-list{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    text-align: center;
+.history .info {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	text-align: center;
 }
 
-.history .select-list .month{
-    margin-left: 45px;
+.history .select-list {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	text-align: center;
 }
 
-.history .swipe{
-    visibility: hidden;
+.history .select-list .month {
+	margin-left: 45px;
 }
 
-.history .table tr{
-    font-size: 1.1rem;
+.history .swipe {
+	visibility: hidden;
 }
 
-.add .swipe{
-    visibility: hidden;
+.history .table tr {
+	font-size: 1.1rem;
 }
 
-.add h2{
-    text-align: center;
-    padding-top: 20px;
-}
-.add .form .btn{
-    padding-top: 0px;
-    height: 38px;
+.add .swipe {
+	visibility: hidden;
 }
 
-.login .account{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    text-align: center;
-    font-size: 1.2rem;
+.add h2 {
+	text-align: center;
+	padding-top: 20px;
+}
+.add .form .btn {
+	padding-top: 0px;
+	height: 38px;
 }
 
-.login .account a{
-    padding-left: 10px;
+.login .account {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	text-align: center;
+	font-size: 1.2rem;
 }
 
-.signUp h2{
-    margin-top: 20px;
+.login .account a {
+	padding-left: 10px;
 }
 
-.signUp .account{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    text-align: center;
-    font-size: 1.2rem;
+.signUp h2 {
+	margin-top: 20px;
 }
 
-.signUp .account a{
-    padding-left: 10px;
+.signUp .account {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	text-align: center;
+	font-size: 1.2rem;
+}
+
+.signUp .account a {
+	padding-left: 10px;
+}
+
+.hover:hover {
+	color: #bada55;
 }
 
 @media only screen and (max-width: 500px) {
-    .history .select-list .month{
-        margin-left: 0px;
-    }
-    .history .swipe{
-        visibility: visible;
-        margin-left: 80px;
-        font-size: 1rem;
-    }
-    .add .current-month .expense{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        text-align: center;
-    }
-    .add .swipe{
-        visibility: visible;
-        margin-left: 100px;
-        font-size: 1rem;
-    }
-    .team .card-1 .card-body{
-        visibility: hidden;
-    }
-    .team .card-2 .card-body{
-        visibility: hidden;
-    }
-  }
+	.history .select-list .month {
+		margin-left: 0px;
+	}
+	.history .swipe {
+		visibility: visible;
+		margin-left: 80px;
+		font-size: 1rem;
+	}
+	.add .current-month .expense {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		text-align: center;
+	}
+	.add .swipe {
+		visibility: visible;
+		margin-left: 100px;
+		font-size: 1rem;
+	}
+	.team .card-1 .card-body {
+		visibility: hidden;
+	}
+	.team .card-2 .card-body {
+		visibility: hidden;
+	}
+}
 
-  @media only screen and (max-width: 1050px) {
-    .add .form .btn{
-        padding-top: 0px;
-        font-size: 0.85rem;
-    }
-  }
+@media only screen and (max-width: 1050px) {
+	.add .form .btn {
+		padding-top: 0px;
+		font-size: 0.85rem;
+	}
+}

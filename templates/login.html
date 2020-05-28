@@ -1,16 +1,15 @@
 {% extends 'layout.html' %} {% block body %}
 <div class="login container text-white">
-	<h2 class="text-center mt-5">Login</h2>
 	{% from "includes/_formhelpers.html" import render_field %}
 	<form action="" method="post">
-		<div class="green-text form-group">
+		<div class="green-text form-group mt-5">
 			{{render_field(form.username, class_="form-control")}}
 		</div>
 		<div class="green-text form-group">
 			{{render_field(form.password, class_="form-control")}}
 		</div>
-		<p class="text-center"><input class="btn btn-info" type="submit" value="Submit" /></p>
+		<p class="text-center"><input class="btn btn-info" type="submit" value="Login" /></p>
 	</form>
-	<p class="account">Don't have an account? <a class="green-text" href="/signup"> SignUp</a></p>
+	<p class="account">Don't have an account? <a class="green-text hover" href="/signup"> SignUp</a></p>
 </div>
 {% endblock %}

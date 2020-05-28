@@ -1,9 +1,8 @@
 {% extends 'layout.html' %} {% block body %}
 <div class="signUp container text-white">
-	<h2 class="text-center">Sign Up</h2>
 	{% from "includes/_formhelpers.html" import render_field %}
 	<form action="" method="post">
-		<div class="green-text form-group">
+		<div class="green-text form-group mt-3">
 			{{render_field(form.first_name, class_="form-control")}}
 		</div>
 		<div class="green-text form-group">
@@ -21,8 +20,8 @@
 		<div class="green-text form-group">
 			{{render_field(form.confirm, class_="form-control")}}
 		</div>
-		<p class="text-center"><input class="btn btn-info" type="submit" value="Submit" /></p>
+		<p class="text-center"><input class="btn btn-info" type="submit" value="Sign Up" /></p>
 	</form>
-	<p class="account">Have an account?<a class="green-text" href="/login">Login</a></p>
+	<p class="account">Have an account?<a class="green-text hover" href="/login">Login</a></p>
 </div>
 {% endblock %}
