@@ -1,5 +1,3 @@
-console.log('hello');
-
 $(document).ready(function () {
 	$('.delete-transaction').click(function () {
 		var id = $(this).attr('data-id');
