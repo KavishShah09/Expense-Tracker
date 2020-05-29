@@ -1,0 +1,17 @@
+{% extends 'layout.html' %} {% block body %}
+<div class="signUp container text-white">
+    {% from "includes/_formhelpers.html" import render_field %}
+    <h1 class="text-center green-text"><u>FORGOT PASSWORD</u></h1>
+    <div class="text-center">
+        <p>Enter the registered email address of your account and we shall send you an email.</p>
+        <p>The email will consist of a link. Click on the link to reset your password.</p>
+        <small>The link will expire in 30 minutes</small>
+    </div>
+	<form action="" method="post">
+		<h4 class="green-text form-group">
+			{{render_field(form.email, class_="form-control")}}
+		</h4>
+		<p class="text-center"><input class="btn btn-info" type="submit" value="Submit" /></p>
+	</form>
+</div>
+{% endblock %}

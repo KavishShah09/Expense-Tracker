@@ -1,0 +1,15 @@
+{% extends 'layout.html' %} {% block body %}
+<div class="signUp container text-white">
+	{% from "includes/_formhelpers.html" import render_field %}
+    <h1 class="text-center green-text"><u>CHANGE PASSWORD</u></h1>
+    <form action="" method="post">
+		<div class="green-text form-group">
+			{{render_field(form.password, class_="form-control")}}
+		</div>
+		<div class="green-text form-group">
+			{{render_field(form.confirm, class_="form-control")}}
+		</div>
+		<p class="text-center"><input class="btn btn-info" type="submit" value="Confirm" /></p>
+	</form>
+</div>
+{% endblock %}
