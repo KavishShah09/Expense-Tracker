@@ -111,12 +111,32 @@
 	height: 38px;
 }
 
+.login .enter{
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	text-align: center;
+}
+
+.login .enter .forgot{
+	margin: 10px;
+}
+
+.login .enter .submit{
+	font-size: 1.2rem;
+}
+
+.login .enter .forgot .link:hover{
+	color: #bada55;
+}
+
 .login .account {
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
 	text-align: center;
 	font-size: 1.2rem;
+	padding-top: 15px;
 }
 
 .login .account a {
@@ -168,6 +188,16 @@
 	}
 	.team .card-2 .card-body {
 		visibility: hidden;
+	}
+	.login .account {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		text-align: center;
+		font-size: 1rem;
+	}
+	.login .enter{
+		display: block;
 	}
 }
 
