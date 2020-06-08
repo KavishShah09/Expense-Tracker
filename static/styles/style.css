@@ -86,6 +86,15 @@
 	text-align: center;
 }
 
+.history .month .pie_chart{
+	margin-left: 10px;
+	margin-bottom: 5px;
+}
+.history .month .bar_chart{
+	margin-right: 10px;
+	margin-bottom: 5px;
+}
+
 .history .select-list .month {
 	margin-left: 45px;
 }
@@ -96,6 +105,15 @@
 
 .history .table tr {
 	font-size: 1.1rem;
+}
+
+.add .current-month .pie_chart{
+	margin-left: 10px;
+	margin-bottom: 5px;
+}
+.add .current-month .bar_chart{
+	margin-right: 10px;
+	margin-bottom: 5px;
 }
 
 .add .swipe {
@@ -167,20 +185,26 @@
 	.history .select-list .month {
 		margin-left: 0px;
 	}
-	.history .swipe {
-		visibility: visible;
-		margin-left: 80px;
-		font-size: 1rem;
-	}
-	.add .current-month .expense {
+	.history .month{
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		justify-content: center;
 		text-align: center;
 	}
+	.history .month .pie_chart{
+		margin-bottom: 10px;
+		margin-left: 0px;
+	}
+	.history .month .bar_chart{
+		margin-bottom: 10px;
+		margin-right: 0px;
+	}
+	.history .swipe {
+		visibility: visible;
+		font-size: 1rem;
+	}
 	.add .swipe {
 		visibility: visible;
-		margin-left: 100px;
 		font-size: 1rem;
 	}
 	.team .card-1 .card-body {
@@ -198,6 +222,78 @@
 	}
 	.login .enter{
 		display: block;
+	}
+	.add .current-month{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		text-align: center;
+	}
+	.add .current-month .pie_chart{
+		margin-bottom: 10px;
+		margin-left: 0px;
+	}
+	.add .current-month .bar_chart{
+		margin-bottom: 10px;
+		margin-right: 0px;
+	}	
+}
+
+@media only screen and (max-width: 990px) {
+	.history .select-list .month {
+		margin-left: 0px;
+	}
+	.history .month{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		text-align: center;
+	}
+	.history .month .pie_chart{
+		margin-bottom: 10px;
+		margin-left: 0px;
+	}
+	.history .month .bar_chart{
+		margin-bottom: 10px;
+		margin-right: 0px;
+	}
+	.history .swipe {
+		visibility: visible;
+		font-size: 1rem;
+	}
+	.add .swipe {
+		visibility: visible;
+		font-size: 1rem;
+	}
+	.team .card-1 .card-body {
+		visibility: hidden;
+	}
+	.team .card-2 .card-body {
+		visibility: hidden;
+	}
+	.login .account {
+		display: flex;
+		flex-direction: row;
+		justify-content: center;
+		text-align: center;
+		font-size: 1rem;
+	}
+	.login .enter{
+		display: block;
+	}
+	.add .current-month{
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		text-align: center;
+	}
+	.add .current-month .pie_chart{
+		margin-bottom: 10px;
+		margin-left: 0px;
+	}
+	.add .current-month .bar_chart{
+		margin-bottom: 10px;
+		margin-right: 0px;
 	}
 }
 
