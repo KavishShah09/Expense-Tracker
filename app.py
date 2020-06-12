@@ -484,105 +484,22 @@ def reset_token(token):
 @app.route('/category')
 def createBarCharts():
     cur = mysql.connection.cursor()
-    result = cur.execute("SELECT Sum(amount) FROM transactions WHERE YEAR(date) = YEAR(CURRENT_DATE()) AND category = %s AND user_id = %s", ('Miscellaneous', [
-        session['userID']]))
+    result = cur.execute(
+        f"SELECT Sum(amount) AS amount, category FROM transactions WHERE YEAR(date) = YEAR(CURRENT_DATE()) AND user_id = {session['userID']} GROUP BY category ORDER BY category")
     if result > 0:
-        data = cur.fetchone()
-        misc = data['Sum(amount)']
-        if misc == None:
-            a = 0
-        else:
-            a = misc
-    result = cur.execute("SELECT Sum(amount) FROM transactions WHERE YEAR(date) = YEAR(CURRENT_DATE()) AND category = %s AND user_id = %s", ('Food', [
-        session['userID']]))
-    if result > 0:
-        data = cur.fetchone()
-        food = data['Sum(amount)']
-        if food == None:
-            b = 0
-        else:
-            b = food
-    result = cur.execute("SELECT Sum(amount) FROM transactions WHERE YEAR(date) = YEAR(CURRENT_DATE()) AND category = %s AND user_id = %s", ('Transportation', [
-        session['userID']]))
-    if result > 0:
-        data = cur.fetchone()
-        trans = data['Sum(amount)']
-        if trans == None:
-            c = 0
-        else:
-            c = trans
-    result = cur.execute("SELECT Sum(amount) FROM transactions WHERE YEAR(date) = YEAR(CURRENT_DATE()) AND category = %s AND user_id = %s", ('Groceries', [
-        session['userID']]))
-    if result > 0:
-        data = cur.fetchone()
-        groceries = data['Sum(amount)']
-        if groceries == None:
-            d = 0
-        else:
-            d = groceries
-    result = cur.execute("SELECT Sum(amount) FROM transactions WHERE YEAR(date) = YEAR(CURRENT_DATE()) AND category = %s AND user_id = %s", ('Clothing', [
-        session['userID']]))
-    if result > 0:
-        data = cur.fetchone()
-        clothing = data['Sum(amount)']
-        if clothing == None:
-            e = 0
-        else:
-            e = clothing
-    result = cur.execute("SELECT Sum(amount) FROM transactions WHERE YEAR(date) = YEAR(CURRENT_DATE()) AND category = %s AND user_id = %s", ('Rent', [
-        session['userID']]))
-    if result > 0:
-        data = cur.fetchone()
-        rent = data['Sum(amount)']
-        if rent == None:
-            f = 0
-        else:
-            f = rent
-    result = cur.execute("SELECT Sum(amount) FROM transactions WHERE YEAR(date) = YEAR(CURRENT_DATE()) AND category = %s AND user_id = %s", ('Bills and Taxes', [
-        session['userID']]))
-    if result > 0:
-        data = cur.fetchone()
-        bills = data['Sum(amount)']
-        if bills == None:
-            g = 0
-        else:
-            g = bills
-    result = cur.execute("SELECT Sum(amount) FROM transactions WHERE YEAR(date) = YEAR(CURRENT_DATE()) AND category = %s AND user_id = %s", ('Vacations', [
-        session['userID']]))
-    if result > 0:
-        data = cur.fetchone()
-        vacay = data['Sum(amount)']
-        if vacay == None:
-            h = 0
-        else:
-            h = vacay
-    result = cur.execute("SELECT Sum(amount) FROM transactions WHERE YEAR(date) = YEAR(CURRENT_DATE()) AND category = %s AND user_id = %s", ('HouseHold', [
-        session['userID']]))
-    if result > 0:
-        data = cur.fetchone()
-        house = data['Sum(amount)']
-        if house == None:
-            i = 0
-        else:
-            i = house
-    cur.close()
+        transactions = cur.fetchall()
+        values = []
+        labels = []
+        for transaction in transactions:
+            values.append(transaction['amount'])
+            labels.append(transaction['category'])
 
-    z = a+b+c+d+e+f+g+h+i
-    p = ((a*100)/z)
-    q = ((b*100)/z)
-    r = ((c*100)/z)
-    s = ((d*100)/z)
-    t = ((e*100)/z)
-    u = ((f*100)/z)
-    v = ((g*100)/z)
-    w = ((h*100)/z)
-    x = ((i*100)/z)
-    labels = ['Miscellaneous', 'Food', 'HouseHold', 'Transportation',
-              'Groceries', 'Clothing', 'Rent', 'Bills and Taxes', 'Vacations']
-    values = [p, q, x, r, s, t, u, v, w]
-    fig = go.Figure(data=[go.Pie(labels=labels, values=values)])
-    fig.update_layout(title_text='Category Wise Pie Chart For Current Year')
-    fig.show()
+        fig = go.Figure(data=[go.Pie(labels=labels, values=values)])
+        fig.update_traces(textinfo='label+value', hoverinfo='percent')
+        fig.update_layout(
+            title_text='Category Wise Pie Chart For Current Year')
+        fig.show()
+    cur.close()
     return redirect(url_for('addTransactions'))
 
 # Comparison Between Current and Previous Year #
