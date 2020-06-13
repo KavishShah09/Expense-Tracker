@@ -478,8 +478,6 @@ def reset_token(token):
         return redirect(url_for('login'))
     return render_template('reset_token.html', title='Reset Password', form=form)
 
-######### GRAPHS #########
-
 # Category Wise Pie Chart For Current Year As Percentage #
 @app.route('/category')
 def createBarCharts():
@@ -501,45 +499,6 @@ def createBarCharts():
         fig.show()
     cur.close()
     return redirect(url_for('addTransactions'))
-
-"""
-@app.route('/comparison')
-def comparison():
-    cur = mysql.connection.cursor()
-    result = cur.execute(
-        f"SELECT sum(amount) as amount FROM transactions WHERE YEAR(date) = YEAR(CURRENT_DATE()) AND user_id = {session['userID']} GROUP BY MONTH(date) ORDER BY MONTH(date)")
-    if result > 0:
-        transactions = cur.fetchall()
-        value1 = [] 
-        for transaction in transactions:
-            value1.append(transaction['amount'])
-    cur.close()
-
-    cur = mysql.connection.cursor()
-    outcome = cur.execute(
-        f"SELECT sum(amount) as amount FROM transactions WHERE YEAR(date) = YEAR(DATE_SUB(CURDATE(), INTERVAL 1 YEAR)) AND user_id = {session['userID']} GROUP BY MONTH(date) ORDER BY MONTH(date)")
-    if outcome > 0:
-        deals = cur.fetchall()
-        y = [] 
-        for deal in deals:
-            y.append(deal['amount'])
-    cur.close()
-
-    print(y)
-    #year = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
-    #        'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
-    #fig = go.Figure(data=[
-    #        go.Bar(name='Last Year', x=year, y=value1),
-    #        go.Bar(name='This Year', x=year, y=value1)
-    #])
-    #fig.update_layout(
-    #    barmode='group', title_text='Comparison Between This Year and Last Year')
-    #fig.show()
-    #cur.close()
-
-    return redirect(url_for('addTransactions'))
-"""
-
 
 # Comparison Between Current and Previous Year #
 @app.route('/yearly_bar')
@@ -708,8 +667,6 @@ def monthlyBar():
         fig.show()
     cur.close()
     return redirect(url_for('addTransactions'))
-
-# End of Graphs #
 
 if __name__ == '__main__':
     app.run(debug=True)
