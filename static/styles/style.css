@@ -94,6 +94,10 @@
 	margin-right: 10px;
 	margin-bottom: 5px;
 }
+.history .month .line_chart{
+	margin-right: 10px;
+	margin-bottom: 5px;
+}
 
 .history .select-list .month {
 	margin-left: 45px;
@@ -112,6 +116,10 @@
 	margin-bottom: 5px;
 }
 .add .current-month .bar_chart{
+	margin-right: 10px;
+	margin-bottom: 5px;
+}
+.add .current-month .line_chart{
 	margin-right: 10px;
 	margin-bottom: 5px;
 }
@@ -199,6 +207,10 @@
 		margin-bottom: 10px;
 		margin-right: 0px;
 	}
+	.history .month .line_chart{
+		margin-bottom: 10px;
+		margin-right: 0px;
+	}
 	.history .swipe {
 		visibility: visible;
 		font-size: 1rem;
@@ -237,6 +249,10 @@
 		margin-bottom: 10px;
 		margin-right: 0px;
 	}	
+	.add .current-month .line_chart{
+		margin-bottom: 10px;
+		margin-right: 0px;
+	}
 }
 
 @media only screen and (max-width: 990px) {
@@ -254,6 +270,10 @@
 		margin-left: 0px;
 	}
 	.history .month .bar_chart{
+		margin-bottom: 10px;
+		margin-right: 0px;
+	}
+	.history .month .line_chart{
 		margin-bottom: 10px;
 		margin-right: 0px;
 	}
@@ -292,6 +312,10 @@
 		margin-left: 0px;
 	}
 	.add .current-month .bar_chart{
+		margin-bottom: 10px;
+		margin-right: 0px;
+	}
+	.add .current-month .line_chart{
 		margin-bottom: 10px;
 		margin-right: 0px;
 	}

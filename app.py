@@ -502,6 +502,45 @@ def createBarCharts():
     cur.close()
     return redirect(url_for('addTransactions'))
 
+"""
+@app.route('/comparison')
+def comparison():
+    cur = mysql.connection.cursor()
+    result = cur.execute(
+        f"SELECT sum(amount) as amount FROM transactions WHERE YEAR(date) = YEAR(CURRENT_DATE()) AND user_id = {session['userID']} GROUP BY MONTH(date) ORDER BY MONTH(date)")
+    if result > 0:
+        transactions = cur.fetchall()
+        value1 = [] 
+        for transaction in transactions:
+            value1.append(transaction['amount'])
+    cur.close()
+
+    cur = mysql.connection.cursor()
+    outcome = cur.execute(
+        f"SELECT sum(amount) as amount FROM transactions WHERE YEAR(date) = YEAR(DATE_SUB(CURDATE(), INTERVAL 1 YEAR)) AND user_id = {session['userID']} GROUP BY MONTH(date) ORDER BY MONTH(date)")
+    if outcome > 0:
+        deals = cur.fetchall()
+        y = [] 
+        for deal in deals:
+            y.append(deal['amount'])
+    cur.close()
+
+    print(y)
+    #year = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
+    #        'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
+    #fig = go.Figure(data=[
+    #        go.Bar(name='Last Year', x=year, y=value1),
+    #        go.Bar(name='This Year', x=year, y=value1)
+    #])
+    #fig.update_layout(
+    #    barmode='group', title_text='Comparison Between This Year and Last Year')
+    #fig.show()
+    #cur.close()
+
+    return redirect(url_for('addTransactions'))
+"""
+
+
 # Comparison Between Current and Previous Year #
 @app.route('/yearly_bar')
 def yearlyBar():
@@ -650,39 +689,27 @@ def yearlyBar():
     fig.show()
     return redirect(url_for('addTransactions'))
 
-# End of Graphs #
-
-# Current Year Month Wise(error if there is no transaction for that month) #
+# Current Year Month Wise #
 @app.route('/monthly_bar')
 def monthlyBar():
     cur = mysql.connection.cursor()
-
-    result = cur.execute("SELECT month(date),sum(amount) FROM tracker.transactions WHERE YEAR(date) = YEAR(CURRENT_DATE()) AND user_id = %s GROUP BY MONTH(date) ORDER BY MONTH(DATE)", [
-        session['userID']])
+    result = cur.execute(
+        f"SELECT sum(amount) as amount, month(date) FROM transactions WHERE YEAR(date) = YEAR(CURRENT_DATE()) AND user_id = {session['userID']} GROUP BY MONTH(date) ORDER BY MONTH(date)")
     if result > 0:
-        data = cur.fetchall()
-        a1 = data[0]['sum(amount)']
-        b1 = data[1]['sum(amount)']
-        c1 = data[2]['sum(amount)']
-        d1 = data[3]['sum(amount)']
-        e1 = data[4]['sum(amount)']
-        f1 = data[5]['sum(amount)']
-        g1 = data[6]['sum(amount)']
-        h1 = data[7]['sum(amount)']
-        i1 = data[8]['sum(amount)']
-        j1 = data[9]['sum(amount)']
-        k1 = data[10]['sum(amount)']
-        l1 = data[11]['sum(amount)']
+        transactions = cur.fetchall()
+        year = []
+        value = [] 
+        for transaction in transactions:
+            year.append(transaction['month(date)'])
+            value.append(transaction['amount'])
 
-    y = [a1, b1, c1, d1, e1, f1, g1, h1, i1, j1, k1, l1]
-    x = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
-         'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec']
-    fig = go.Figure([go.Bar(x=x, y=y)])
-    fig.update_layout(
-        title_text='Monthly Transaction Bar Chart For Current Year')
-    fig.show()
+        fig = go.Figure([go.Bar(x=year, y=value)])
+        fig.update_layout(title_text='Monthly Bar Chart For Current Year')
+        fig.show()
+    cur.close()
     return redirect(url_for('addTransactions'))
 
+# End of Graphs #
 
 if __name__ == '__main__':
     app.run(debug=True)
